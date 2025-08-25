@@ -69,16 +69,20 @@ const LANG_GIT_REBASE: Language = Language {
         State {
             name: "ground",
             rules: &[
-                re(r#"(?:break|exec|b|x)\b{end-half}"#).is(Keyword).then_call("comment"),
-                re(r#"(?:drop|edit|fixup|pick|reword|squash|d|e|f|p|r|s)\b{end-half}"#)
+                re(r#"#.*"#).is(Comment),
+                re(r#"(?:break|exec|b|x)\w+.*"#),
+                re(r#"(?:break|exec|b|x)"#).is(Keyword).then_call("comment"),
+                re(r#"(?:drop|edit|fixup|pick|reword|squash|d|e|f|p|r|s)\w+.*"#),
+                re(r#"(?:drop|edit|fixup|pick|reword|squash|d|e|f|p|r|s)"#)
                     .is(Keyword)
                     .then_call("hash"),
-                re(r#"#.*"#).is(Comment),
+                re(r#".*"#),
             ],
         },
         State {
             name: "hash",
             rules: &[
+                re(r#"-\S+"#).is(Keyword).then_call("hash"),
                 re(r#"\S+"#).is(Variable).then_call("comment"),
                 re(r#"\s+"#),
                 re(r#".*"#).then_return(),

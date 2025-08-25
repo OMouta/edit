@@ -165,7 +165,7 @@ config:
             );
             _ = write!(output, "{}", s.len());
             for &c in s.as_bytes() {
-                _ = write!(output, ", 0x{:02x}", c);
+                _ = write!(output, ", 0x{c:02x}");
             }
             _ = writeln!(output, "].as_ptr();");
         }
@@ -202,7 +202,7 @@ config:
             let action = match &t.dst {
                 GraphAction::Jump(dst) => format!("Jump({})", dst.0),
                 GraphAction::Push(dst) => format!("Push({})", dst.0),
-                GraphAction::Pop(count) => format!("Pop({})", count),
+                GraphAction::Pop(count) => format!("Pop({count})"),
                 GraphAction::Loop(dst) => format!("Loop({})", dst.0),
                 GraphAction::Fallback => unreachable!(),
             };

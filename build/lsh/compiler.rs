@@ -779,7 +779,7 @@ impl GraphBuilder {
 
                 let s = &self.states[t.src];
                 if let Some(name) = s.name {
-                    _ = writeln!(&mut output, "    {0}[\"{0} ({1})\"]", src_offset, name);
+                    _ = writeln!(&mut output, "    {src_offset}[\"{src_offset} ({name})\"]");
                 }
             }
 
@@ -821,7 +821,7 @@ impl GraphBuilder {
 
             let dst_str = match &t.dst {
                 GraphAction::Jump(_) => {
-                    format!("{}", dst_offset)
+                    format!("{dst_offset}")
                 }
                 GraphAction::Push(dst) => {
                     format!(
